@@ -11,8 +11,9 @@ public class JmhRunner
     public static void main(String[] args) throws RunnerException
     {
         Options opt = new OptionsBuilder()
-                .include(MapGetJmhTests.class.getSimpleName())
-                .include(MapPutJmhTests.class.getSimpleName())
+//                .include(MapGetJmhTests.class.getSimpleName())
+//                .include(MapPutJmhTests.class.getSimpleName())
+                .include(SetAddJmhTests.class.getSimpleName())
                 .forks(2)
                 .warmupIterations(25)
                 .measurementIterations(10)

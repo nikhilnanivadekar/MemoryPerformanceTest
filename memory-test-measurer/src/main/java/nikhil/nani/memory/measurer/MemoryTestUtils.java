@@ -1,6 +1,7 @@
 package nikhil.nani.memory.measurer;
 
 import java.util.Map;
+import java.util.Set;
 
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import org.slf4j.Logger;
@@ -26,6 +27,22 @@ public class MemoryTestUtils
         }
     }
 
+    public static void memoryBenchInteger(Set<Integer> set)
+    {
+        long constituentObjectSize = 0;
+        MemoryTestUtils.printMemoryUtilization("Integer", set, constituentObjectSize, set.size());
+
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            set.add(i);
+            constituentObjectSize += ObjectSizeCalculator.getObjectSize(i);
+            MemoryTestUtils.printMemoryUtilization("Integer",
+                    set,
+                    constituentObjectSize,
+                    set.size());
+        }
+    }
+
     public static void memoryBenchString(Map<String, String> map)
     {
         long constituentObjectSize = 0;
@@ -39,6 +56,22 @@ public class MemoryTestUtils
                     map,
                     constituentObjectSize,
                     map.size());
+        }
+    }
+
+    public static void memoryBenchString(Set<String> set)
+    {
+        long constituentObjectSize = 0;
+        MemoryTestUtils.printMemoryUtilization("String", set, constituentObjectSize, set.size());
+
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            set.add(String.valueOf(i));
+            constituentObjectSize += ObjectSizeCalculator.getObjectSize(String.valueOf(i));
+            MemoryTestUtils.printMemoryUtilization("String",
+                    set,
+                    constituentObjectSize,
+                    set.size());
         }
     }
 
