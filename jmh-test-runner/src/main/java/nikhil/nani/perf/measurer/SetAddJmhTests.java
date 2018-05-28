@@ -40,7 +40,7 @@ public class SetAddJmhTests
     }
 
     @Benchmark
-    public MutableSet<Integer> ecIntegerPut()
+    public MutableSet<Integer> ecIntegerAdd()
     {
         MutableSet<Integer> ec = Sets.mutable.empty();
 
@@ -49,7 +49,7 @@ public class SetAddJmhTests
     }
 
     @Benchmark
-    public MutableSet<String> ecStringPut()
+    public MutableSet<String> ecStringAdd()
     {
         MutableSet<String> ec = Sets.mutable.empty();
 
@@ -58,7 +58,7 @@ public class SetAddJmhTests
     }
 
     @Benchmark
-    public Set<Integer> jdkIntegerPut()
+    public Set<Integer> jdkIntegerAdd()
     {
         Set<Integer> jdk = new HashSet<>();
 
@@ -67,7 +67,7 @@ public class SetAddJmhTests
     }
 
     @Benchmark
-    public Set<String> jdkStringPut()
+    public Set<String> jdkStringAdd()
     {
         Set<String> jdk = new HashSet<>();
 

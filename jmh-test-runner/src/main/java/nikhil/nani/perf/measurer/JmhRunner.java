@@ -14,6 +14,8 @@ public class JmhRunner
 //                .include(MapGetJmhTests.class.getSimpleName())
 //                .include(MapPutJmhTests.class.getSimpleName())
                 .include(SetAddJmhTests.class.getSimpleName())
+                .include(SetContainsJmhTests.class.getSimpleName())
+                .include(SetLoopJmhTests.class.getSimpleName())
                 .forks(2)
                 .warmupIterations(25)
                 .measurementIterations(10)
