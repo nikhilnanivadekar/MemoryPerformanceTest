@@ -15,7 +15,7 @@
     </modules>
 
     <properties>
-        <eclipseCollections.version>9.0.0</eclipseCollections.version>
+        <eclipseCollections.version>9.2.0</eclipseCollections.version>
         <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
