@@ -12,6 +12,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="memory-test-measurer" />
+    <orderEntry type="library" name="Maven: org.openjdk.jol:jol-core:0.9" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.collections:eclipse-collections-api:9.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.collections:eclipse-collections:9.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
