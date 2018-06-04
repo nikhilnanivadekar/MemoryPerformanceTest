@@ -13,13 +13,20 @@ public class BagMemoryTestRunner
         System.out.println(VM.current().details());
         BagMemoryTestRunner.memoryForECInteger();
         BagMemoryTestRunner.memoryForJDKInteger();
+        BagMemoryTestRunner.memoryForJDKIntegerLongValue();
         BagMemoryTestRunner.memoryForECString();
         BagMemoryTestRunner.memoryForJDKString();
+        BagMemoryTestRunner.memoryForJDKStringLongValue();
     }
 
     private static void memoryForJDKString()
     {
         MemoryTestUtils.memoryBenchStringBag(new HashMap<>());
+    }
+
+    private static void memoryForJDKStringLongValue()
+    {
+        MemoryTestUtils.memoryBenchStringBagLongValue(new HashMap<>());
     }
 
     private static void memoryForECString()
@@ -30,6 +37,11 @@ public class BagMemoryTestRunner
     private static void memoryForJDKInteger()
     {
         MemoryTestUtils.memoryBenchIntegerBag(new HashMap<>());
+    }
+
+    private static void memoryForJDKIntegerLongValue()
+    {
+        MemoryTestUtils.memoryBenchIntegerBagLongValue(new HashMap<>());
     }
 
     private static void memoryForECInteger()

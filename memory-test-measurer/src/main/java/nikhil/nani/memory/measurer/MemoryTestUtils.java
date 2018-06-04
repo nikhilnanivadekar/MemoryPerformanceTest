@@ -5,8 +5,6 @@ import java.util.Set;
 
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import org.eclipse.collections.api.bag.MutableBag;
-import org.openjdk.jol.info.ClassData;
-import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.GraphLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +73,19 @@ public class MemoryTestUtils
         }
     }
 
+    public static void memoryBenchStringBagLongValue(Map<String, Long> map)
+    {
+        MemoryTestUtils.printMemoryUtilizationUsingJoi("StringLong", map, map.size());
+
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            map.put(String.valueOf(i), Long.valueOf(1));
+            MemoryTestUtils.printMemoryUtilizationUsingJoi("StringLong",
+                    map,
+                    map.size());
+        }
+    }
+
     public static void memoryBenchStringBag(MutableBag<String> bag)
     {
         MemoryTestUtils.printMemoryUtilizationUsingJoi("String", bag, bag.size());
@@ -96,6 +107,19 @@ public class MemoryTestUtils
         {
             map.put(i, Integer.valueOf(1));
             MemoryTestUtils.printMemoryUtilizationUsingJoi("Integer",
+                    map,
+                    map.size());
+        }
+    }
+
+    public static void memoryBenchIntegerBagLongValue(Map<Integer, Long> map)
+    {
+        MemoryTestUtils.printMemoryUtilizationUsingJoi("IntegerLong", map, map.size());
+
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            map.put(i, Long.valueOf(1));
+            MemoryTestUtils.printMemoryUtilizationUsingJoi("IntegerLong",
                     map,
                     map.size());
         }
@@ -157,7 +181,7 @@ public class MemoryTestUtils
                     type,
                     object.getClass(),
                     size,
-                    (GraphLayout.parseInstance(object).toPrintable()));
+                    (GraphLayout.parseInstance(object).totalSize())/1024);
         }
     }
 

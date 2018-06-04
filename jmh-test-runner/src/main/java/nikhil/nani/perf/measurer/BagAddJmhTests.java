@@ -62,7 +62,11 @@ public class BagAddJmhTests
     {
         Map<Integer, Integer> jdk = new HashMap<>();
 
-        this.elements.each(each -> jdk.put(each, 1));
+        this.elements.each(each ->
+        {
+            Integer occurrences = jdk.computeIfAbsent(each, count -> 0);
+            jdk.put(each, ++occurrences);
+        });
         return jdk;
     }
 
@@ -71,7 +75,11 @@ public class BagAddJmhTests
     {
         Map<String, Integer> jdk = new HashMap<>();
 
-        this.stringElements.each(each -> jdk.put(each, 1));
+        this.stringElements.each(each ->
+        {
+            Integer occurrences = jdk.computeIfAbsent(each, count -> 0);
+            jdk.put(each, ++occurrences);
+        });
         return jdk;
     }
 }

@@ -17,6 +17,7 @@ public class JmhRunner
 //                .include(SetContainsJmhTests.class.getSimpleName())
 //                .include(SetLoopJmhTests.class.getSimpleName())
                 .include(BagAddJmhTests.class.getSimpleName())
+                .include(BagAddSameElementJmhTests.class.getSimpleName())
                 .include(BagOccurrencesJmhTests.class.getSimpleName())
                 .forks(2)
                 .warmupIterations(25)

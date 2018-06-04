@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.collections.api.bag.MutableBag;
+import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Bags;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.list.Interval;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -21,7 +23,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class BagOccurrencesJmhTests
+public class BagAddSameElementJmhTests
 {
     @Param({"100", "1000", "10000", "20000", "30000", "40000", "50000", "60000", "70000", "80000", "90000", "100000"})
     public int size;
@@ -31,73 +33,56 @@ public class BagOccurrencesJmhTests
     private Map<Integer, Integer> jdkInteger;
     private Map<String, Integer> jdkString;
 
-    private Interval elements;
+    private MutableList<String> strings;
+    private MutableList<Integer> integers;
 
     @Setup
     public void setUp()
     {
-        this.elements = Interval.fromTo(0, this.size);
+        MutableList<Interval> intervals = Lists.mutable.withNValues(10, () -> Interval.oneTo(size));
+        this.strings = intervals.asLazy().flatCollect(each -> each).collect(String::valueOf).toList();
+        this.integers = intervals.asLazy().flatCollect(each -> each).toList();
+
         this.ecInteger = Bags.mutable.empty();
         this.ecString = Bags.mutable.empty();
         this.jdkInteger = new HashMap<>();
         this.jdkString = new HashMap<>();
-        this.elements.each(each ->
-        {
-            ecInteger.add(each);
-            ecString.add(String.valueOf(each));
-            jdkInteger.put(each, 1);
-            jdkString.put(String.valueOf(each), 1);
-        });
     }
 
     @Benchmark
-    public int ecIntegerOccurrencesOf()
+    public int ecIntegerAddSameElement()
     {
-        this.elements.each(each ->
-        {
-            if (this.ecInteger.occurrencesOf(each) != 1)
-            {
-                throw new IllegalStateException();
-            }
-        });
+        this.integers.each(this.ecInteger::add);
+
         return this.ecInteger.size();
     }
 
     @Benchmark
-    public int ecStringOccurrencesOf()
+    public int ecStringAddSameElement()
     {
-        this.elements.each(each ->
-        {
-            if (this.ecString.occurrencesOf(String.valueOf(each)) != 1)
-            {
-                throw new IllegalStateException();
-            }
-        });
+        this.strings.each(this.ecString::add);
+
         return this.ecString.size();
     }
 
     @Benchmark
-    public int jdkIntegerOccurrencesOf()
+    public int jdkIntegerAddSameElement()
     {
-        this.elements.each(each ->
+        this.integers.each(each ->
         {
-            if (this.jdkInteger.get(each) != 1)
-            {
-                throw new IllegalStateException();
-            }
+            Integer occurrences = this.jdkInteger.computeIfAbsent(each, count -> 0);
+            this.jdkInteger.put(each, ++occurrences);
         });
         return this.jdkInteger.size();
     }
 
     @Benchmark
-    public int jdkStringOccurrencesOf()
+    public int jdkStringAddSameElement()
     {
-        this.elements.each(each ->
+        this.strings.each(each ->
         {
-            if (this.jdkString.get(String.valueOf(each)) != 1)
-            {
-                throw new IllegalStateException();
-            }
+            Integer occurrences = this.jdkString.computeIfAbsent(each, count -> 0);
+            this.jdkString.put(each, ++occurrences);
         });
         return this.jdkString.size();
     }
